@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<SplitPane dividerPositions="0.18707940780619112" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="745.0" prefWidth="1048.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="136.0" prefWidth="1048.0" spacing="10.0">
+               <children>
+                  <Button mnemonicParsing="false" text="by US Location" />
+                  <Button mnemonicParsing="false" text="by Sir Name" />
+                  <Button mnemonicParsing="false" text="by Subject/Theme/Value" />
+               </children>
+            </HBox>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <HBox alignment="TOP_CENTER" prefHeight="601.0" prefWidth="1046.0" spacing="10.0">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label text="Choose a State" />
+                        <RadioButton mnemonicParsing="false" text="Colorado" />
+                        <RadioButton mnemonicParsing="false" text="Idaho" />
+                        <RadioButton mnemonicParsing="false" text="Montana" />
+                        <RadioButton mnemonicParsing="false" text="Nevada" />
+                        <RadioButton mnemonicParsing="false" text="Oregon" />
+                        <RadioButton mnemonicParsing="false" text="Utah" />
+                        <RadioButton mnemonicParsing="false" text="Washington" />
+                        <RadioButton mnemonicParsing="false" text="Wyoming" />
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="Choose a Community" />
+                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0">
+                     <children>
+                        <Label text="Choose an Individual" />
+                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0">
+                     <children>
+                        <Label text="Choose Clip" />
+                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

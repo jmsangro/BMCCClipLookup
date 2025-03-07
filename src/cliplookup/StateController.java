@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -56,7 +57,9 @@ public class StateController implements Initializable{
 	private ComboBox<String> themeComboBox;
 	@FXML
 	private MediaView mediaView;
-	
+	@FXML
+	private Label clipTitleLabel;
+	private MediaPlayer mediaPlayer;
 	
 	private Node[] stateCriteriaNodes;
 	private Node[] sirNameCriteriaNodes;
@@ -89,7 +92,8 @@ public class StateController implements Initializable{
 	@FXML
 	public void stateSelected(ActionEvent e) {
         String state = stateCombo.getValue();
-        System.out.println(state + " selected"); 
+        System.out.println(state + " selected");
+        resetVideo();
         setupTownsForState(state);
         townChoiceVbox.setVisible(true);
 		hideDownStreamNodes(townChoiceVbox, stateCriteriaNodes);
@@ -105,6 +109,7 @@ public class StateController implements Initializable{
 
 	@FXML
 	public void byStateSelected() {
+		resetVideo();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(stateCriteriaNodes);
 		stateChoiceVbox.setVisible(true);
@@ -113,6 +118,7 @@ public class StateController implements Initializable{
 
 	@FXML
 	public void byThemeSelected() {
+		resetVideo();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(themeCriteriaNodes);
 		themeVbox.setVisible(true);
@@ -133,6 +139,7 @@ public class StateController implements Initializable{
 
 	@FXML
 	public void bySirNameSelected() {
+		resetVideo();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(sirNameCriteriaNodes);
 		sirNameChoiceVbox.setVisible(true);
@@ -142,6 +149,7 @@ public class StateController implements Initializable{
 	
 	@FXML
 	public void sirNameSelected() {
+		resetVideo();
 		System.out.println("sir name:"+sirNameComboBox.getValue());
 		Collection<String> persons = dataSource.getPersonsWithSirName(sirNameComboBox.getValue());
 		ObservableList<String> items =FXCollections.observableArrayList (persons);		
@@ -152,6 +160,7 @@ public class StateController implements Initializable{
 	}	
 	@FXML
 	public void townSelected() {
+		resetVideo();
 		System.out.println("town:"+townComboBox.getValue());
 		Collection<String> persons = dataSource.getPersonsFromTown(townComboBox.getValue());
 		ObservableList<String> items =FXCollections.observableArrayList (persons);		
@@ -163,32 +172,47 @@ public class StateController implements Initializable{
 	}
 	@FXML
 	public void personSelected() {
+		resetVideo();
 		System.out.println("person:"+personComboBox.getValue());
 		Collection<String> clips = dataSource.getClipsOfPerson(personComboBox.getValue());
 		ObservableList<String> items =FXCollections.observableArrayList (clips);		
 		clipComboBox.setItems(items);
 		clipChoiceVbox.setVisible(true);
 	}
-	@FXML void clipSelected() {
+	
+	@FXML
+	public void clipSelected() {
 		String clipName = clipComboBox.getValue();
 		System.out.println("clip: "+clipName+" selected");
+		clipTitleLabel.setText(clipName);
+		clipTitleLabel.setVisible(true);
 		String fileName = dataSource.getClipLocator( clipName);
         if (fileName != null) {
         	System.out.println("File:"+fileName);
 			Media media = new Media(new File(fileName).toURI().toString());
-			MediaPlayer mediaplayer = new MediaPlayer(media);
-			mediaView.setMediaPlayer(mediaplayer);
-			mediaplayer.play();
+			mediaPlayer = new MediaPlayer(media);
+			mediaView.setMediaPlayer(mediaPlayer);
+			mediaView.setVisible(true);
+			mediaPlayer.play();
 		}
 	}
 	
 	@FXML
 	public void themeSelected() {
+		resetVideo();
 		String theme = themeComboBox.getValue();
 		Collection<String> clips = dataSource.getClipsOfTheme(theme);
 		ObservableList<String> items =FXCollections.observableArrayList (clips);		
 		clipComboBox.setItems(items);
 		clipChoiceVbox.setVisible(true);		
+	}
+	
+	private void resetVideo() {
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+		}
+		mediaView.setVisible(false);
+		clipTitleLabel.setVisible(false);
 	}
 
 	

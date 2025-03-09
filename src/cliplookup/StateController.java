@@ -94,25 +94,29 @@ public class StateController implements Initializable{
         String state = stateCombo.getValue();
         System.out.println(state + " selected");
         resetVideo();
-        setupTownsForState(state);
+        Collection<String> towns = dataSource.getTowns(state);
+		ObservableList<String> items =FXCollections.observableArrayList ( towns);
+		townComboBox.setItems(items);
         townChoiceVbox.setVisible(true);
-		hideDownStreamNodes(townChoiceVbox, stateCriteriaNodes);
+        if (towns.size() == 1) {
+        	townComboBox.setValue(items.iterator().next());
+        }
+        else {
+        	townComboBox.setValue(null);
+        	hideDownStreamNodes(townChoiceVbox, stateCriteriaNodes);
+        }
 
 	}
 	
-	protected void setupTownsForState(String s) {
-		Collection<String> towns = dataSource.getTowns(s);
-		ObservableList<String> items =FXCollections.observableArrayList ( towns);
-		townComboBox.setItems(items);
-		
-	}
 
 	@FXML
 	public void byStateSelected() {
 		resetVideo();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(stateCriteriaNodes);
+		stateCombo.setValue(null);
 		stateChoiceVbox.setVisible(true);
+		
 		hideDownStreamNodes(stateChoiceVbox, stateCriteriaNodes);
 	}
 
@@ -121,6 +125,7 @@ public class StateController implements Initializable{
 		resetVideo();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(themeCriteriaNodes);
+		themeComboBox.setValue(null);
 		themeVbox.setVisible(true);
 		hideDownStreamNodes(themeVbox, themeCriteriaNodes);
 	}
@@ -142,6 +147,7 @@ public class StateController implements Initializable{
 		resetVideo();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(sirNameCriteriaNodes);
+		sirNameComboBox.setValue(null);
 		sirNameChoiceVbox.setVisible(true);
 		hideDownStreamNodes(sirNameChoiceVbox, sirNameCriteriaNodes);
 
@@ -155,7 +161,13 @@ public class StateController implements Initializable{
 		ObservableList<String> items =FXCollections.observableArrayList (persons);		
 		personComboBox.setItems(items);
 		personChoiceVbox.setVisible(true);
-		hideDownStreamNodes(personChoiceVbox, sirNameCriteriaNodes);
+		if (persons.size() == 1) {//skip having to make a choice
+			personComboBox.setValue(persons.iterator().next());
+		}
+		else {
+			personComboBox.setValue(null);
+			hideDownStreamNodes(personChoiceVbox, sirNameCriteriaNodes);
+		}
 
 	}	
 	@FXML
@@ -167,7 +179,14 @@ public class StateController implements Initializable{
 		personComboBox.setItems(items);
 
 		personChoiceVbox.setVisible(true);
-		hideDownStreamNodes(personChoiceVbox, stateCriteriaNodes);
+		if (persons.size() == 1) {//skip having to make a choice
+			personComboBox.setValue(persons.iterator().next());
+		}
+		else {
+			personComboBox.setValue(null);
+			hideDownStreamNodes(personChoiceVbox, stateCriteriaNodes);
+		}		
+		
 
 	}
 	@FXML
@@ -178,6 +197,13 @@ public class StateController implements Initializable{
 		ObservableList<String> items =FXCollections.observableArrayList (clips);		
 		clipComboBox.setItems(items);
 		clipChoiceVbox.setVisible(true);
+		if (clips.size() == 1) {//skip having to make a choice
+			clipComboBox.setValue(clips.iterator().next());			
+		}
+		else {
+			clipComboBox.setValue(null);
+		}
+
 	}
 	
 	@FXML
@@ -204,7 +230,13 @@ public class StateController implements Initializable{
 		Collection<String> clips = dataSource.getClipsOfTheme(theme);
 		ObservableList<String> items =FXCollections.observableArrayList (clips);		
 		clipComboBox.setItems(items);
-		clipChoiceVbox.setVisible(true);		
+		clipChoiceVbox.setVisible(true);
+		if (clips.size() == 1) {//skip having to make a choice
+			clipComboBox.setValue(clips.iterator().next());			
+		}
+		else {
+			clipComboBox.setValue(null);
+		}
 	}
 	
 	private void resetVideo() {

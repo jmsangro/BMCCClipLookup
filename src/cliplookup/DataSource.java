@@ -45,6 +45,18 @@ public class DataSource {
 		return names;
 		
 	}
+	public Collection<PicLabelData> getPicLabelsFromTown(String value) {
+		Set<PicLabelData> names = new TreeSet<PicLabelData>();
+		for (String[] row : records) {
+			if (row[7] != null && row[7].equals(value)) {
+				PicLabelData pld = new PicLabelData(row[2],row[5]);
+			 names.add(pld);
+			}
+		}
+		return names;
+		
+	}
+	
 	public Collection<String> getClipsOfPerson(String value) {
 		// TODO Auto-generated method stub
 		ArrayList<String> returnVal = new ArrayList<String>();
@@ -100,5 +112,15 @@ public class DataSource {
 	}
 	public Collection<String> getAllThemes() {
 		return getUniqueByRow(4);
+	}
+	public Collection<PicLabelData> getPicLabelsWithSirName(String value) {
+		Set<PicLabelData> names = new TreeSet<PicLabelData>();
+		for (String[] row : records) {
+			if (row[0] != null && row[0].equals(value)) {
+				PicLabelData pld = new PicLabelData(row[2],row[5]);
+			 names.add(pld);
+			}
+		}
+		return names;
 	}
 }

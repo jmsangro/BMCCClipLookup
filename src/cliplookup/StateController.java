@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -46,7 +47,7 @@ public class StateController implements Initializable{
 	@FXML
 	private ComboBox<String> townComboBox;
 	@FXML
-	private ComboBox<String> personComboBox;
+	private ComboBox<PicLabelData> personComboBox;
 	@FXML
 	private ComboBox<String> stateCombo;
 	@FXML
@@ -86,6 +87,7 @@ public class StateController implements Initializable{
 		sirNameComboBox.setItems(snItems);
 		ObservableList<String> themeItems =FXCollections.observableArrayList (dataSource.getAllThemes());
 		themeComboBox.setItems(themeItems);
+		personComboBox.setCellFactory((ListView<PicLabelData> l) -> new PicNameCell());
 		
 	}
 	
@@ -157,8 +159,8 @@ public class StateController implements Initializable{
 	public void sirNameSelected() {
 		resetVideo();
 		System.out.println("sir name:"+sirNameComboBox.getValue());
-		Collection<String> persons = dataSource.getPersonsWithSirName(sirNameComboBox.getValue());
-		ObservableList<String> items =FXCollections.observableArrayList (persons);		
+		Collection<PicLabelData> persons = dataSource.getPicLabelsWithSirName(sirNameComboBox.getValue());
+		ObservableList<PicLabelData> items =FXCollections.observableArrayList (persons);		
 		personComboBox.setItems(items);
 		personChoiceVbox.setVisible(true);
 		if (persons.size() == 1) {//skip having to make a choice
@@ -174,8 +176,8 @@ public class StateController implements Initializable{
 	public void townSelected() {
 		resetVideo();
 		System.out.println("town:"+townComboBox.getValue());
-		Collection<String> persons = dataSource.getPersonsFromTown(townComboBox.getValue());
-		ObservableList<String> items =FXCollections.observableArrayList (persons);		
+		Collection<PicLabelData> persons = dataSource.getPicLabelsFromTown(townComboBox.getValue());
+		ObservableList<PicLabelData> items =FXCollections.observableArrayList (persons);		
 		personComboBox.setItems(items);
 
 		personChoiceVbox.setVisible(true);
@@ -192,16 +194,19 @@ public class StateController implements Initializable{
 	@FXML
 	public void personSelected() {
 		resetVideo();
-		System.out.println("person:"+personComboBox.getValue());
-		Collection<String> clips = dataSource.getClipsOfPerson(personComboBox.getValue());
-		ObservableList<String> items =FXCollections.observableArrayList (clips);		
-		clipComboBox.setItems(items);
-		clipChoiceVbox.setVisible(true);
-		if (clips.size() == 1) {//skip having to make a choice
-			clipComboBox.setValue(clips.iterator().next());			
-		}
-		else {
-			clipComboBox.setValue(null);
+		PicLabelData pld = personComboBox.getValue();
+		System.out.println("person:"+pld);
+		if (pld != null) {
+			Collection<String> clips = dataSource.getClipsOfPerson(personComboBox.getValue().labelText);
+			ObservableList<String> items =FXCollections.observableArrayList (clips);		
+			clipComboBox.setItems(items);
+			clipChoiceVbox.setVisible(true);
+			if (clips.size() == 1) {//skip having to make a choice
+				clipComboBox.setValue(clips.iterator().next());			
+			}
+			else {
+				clipComboBox.setValue(null);
+			}
 		}
 
 	}

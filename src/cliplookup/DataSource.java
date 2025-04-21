@@ -13,7 +13,7 @@ public class DataSource {
 	private List<String[]> records;	
 	public DataSource () {
 		try {
-			String dataFile = "./DummyDataKioskLibrary.csv";
+			String dataFile = "./Test Data.csv";
 	        FileReader filereader = new FileReader(dataFile); 
 	        try (CSVReader csvReader = new CSVReader(filereader)) {
 				records = csvReader.readAll();

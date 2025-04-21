@@ -25,8 +25,8 @@ public class PicNameCell  extends ListCell<PicLabelData> {
 				ImageView imageView = new ImageView();
 				Image image = new Image(new File(item.imageURL).toURI().toURL().toExternalForm());
 				imageView.setImage(image);
-				imageView.setFitHeight(80);
-				imageView.setFitWidth(120);
+				imageView.setFitHeight(40);
+				imageView.setFitWidth(60);
 				hbox.getChildren().add(imageView);
 			} catch (MalformedURLException e) {
 				System.err.println(item.imageURL + "  " + e);

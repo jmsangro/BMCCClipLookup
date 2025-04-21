@@ -1,6 +1,6 @@
 package cliplookup;
 
-import java.io.File;
+
 import java.net.URL;
 import java.util.Collection;
 import java.util.ResourceBundle;
@@ -13,11 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
@@ -58,8 +56,7 @@ public class StateController implements Initializable{
 	private ComboBox<String> themeComboBox;
 	@FXML
 	private MediaView mediaView;
-	@FXML
-	private Label clipTitleLabel;
+
 	private MediaPlayer mediaPlayer;
 	
 	private Node[] stateCriteriaNodes;
@@ -215,17 +212,22 @@ public class StateController implements Initializable{
 	public void clipSelected() {
 		String clipName = clipComboBox.getValue();
 		System.out.println("clip: "+clipName+" selected");
-		clipTitleLabel.setText(clipName);
-		clipTitleLabel.setVisible(true);
-		String fileName = dataSource.getClipLocator( clipName);
-        if (fileName != null) {
-        	System.out.println("File:"+fileName);
-			Media media = new Media(new File(fileName).toURI().toString());
-			mediaPlayer = new MediaPlayer(media);
-			mediaView.setMediaPlayer(mediaPlayer);
-			mediaView.setVisible(true);
-			mediaPlayer.play();
+		if (clipName != null) {
+			String fileName = dataSource.getClipLocator(clipName);
+			if (fileName != null) {
+				playClip(clipName, fileName);
+			} 
 		}
+	}
+
+	private void playClip(String clipName, String fileName) {
+		ClipLookupMain.showClip(clipName,fileName);
+//		System.out.println("File:"+fileName);
+//		Media media = new Media(new File(fileName).toURI().toString());
+//		mediaPlayer = new MediaPlayer(media);
+//		mediaView.setMediaPlayer(mediaPlayer);
+//		mediaView.setVisible(true);
+//		mediaPlayer.play();
 	}
 	
 	@FXML
@@ -249,7 +251,7 @@ public class StateController implements Initializable{
 			mediaPlayer.stop();
 		}
 		mediaView.setVisible(false);
-		clipTitleLabel.setVisible(false);
+
 	}
 
 	

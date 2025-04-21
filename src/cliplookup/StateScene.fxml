@@ -62,7 +62,6 @@
             </VBox>
             </children>
          </HBox>
-      <Label fx:id="clipTitleLabel" text="Clip Title" />
          <MediaView fx:id="mediaView" fitHeight="600.0" fitWidth="800.0" />        
       </children>
 </VBox>

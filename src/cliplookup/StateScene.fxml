@@ -5,16 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="1048.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cliplookup.StateController">
       <children>
-      <Label text="Explore Community History Interview Clips">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
+	     <Label text="Explore Community History Interview Clips">
+	         <font>
+	            <Font size="24.0" />
+	         </font>
+	      </Label>
          <HBox alignment="CENTER" prefHeight="136.0" prefWidth="1048.0" spacing="10.0">
             <children>
                <Button fx:id="byStateButton" mnemonicParsing="false" onAction="#byStateSelected" text="by US Location" />
@@ -44,24 +43,26 @@
                </VBox>
                <VBox fx:id="clipChoiceVbox" prefHeight="200.0">
                   <children>
-                     <Label fx:id="clipCombo" text="Choose Clip" />
+                     <Label  text="Choose Clip" />
                   <ComboBox fx:id="clipComboBox" onAction="#clipSelected" prefWidth="150.0" />
                   </children>
                </VBox>
-            <VBox fx:id="sirNameChoiceVbox" layoutX="699.0" layoutY="10.0" prefHeight="200.0">
-               <children>
-                  <Label fx:id="clipCombo1" text="Choose a Sir Name" />
-                  <ComboBox fx:id="sirNameComboBox" onAction="#sirNameSelected" prefWidth="150.0" />
-               </children>
-            </VBox>
-            <VBox fx:id="themeVbox" layoutX="779.0" layoutY="10.0" prefHeight="200.0">
-               <children>
-                  <Label fx:id="themeLabel" text="Choose a Theme" />
-                  <ComboBox fx:id="themeComboBox" onAction="#themeSelected" prefWidth="150.0" />
-               </children>
-            </VBox>
+	            <VBox fx:id="sirNameChoiceVbox" layoutX="699.0" layoutY="10.0" prefHeight="200.0">
+	               <children>
+	                  <Label text="Choose a Sir Name" />
+	                  <ComboBox fx:id="sirNameComboBox" onAction="#sirNameSelected" prefWidth="150.0" />
+	               </children>
+	            </VBox>
+	            <VBox fx:id="themeVbox" layoutX="779.0" layoutY="10.0" prefHeight="200.0">
+	               <children>
+	                  <Label text="Choose a Theme" />
+	                  <ComboBox fx:id="themeComboBox" onAction="#themeSelected" prefWidth="150.0" />
+	               </children>
+	            </VBox>
             </children>
          </HBox>
-         <MediaView fx:id="mediaView" fitHeight="600.0" fitWidth="800.0" />        
+         <Label fx:id="playLabel" text="Play this clip ..." />
+      	 <Button fx:id="clipStartButton" onAction="#clipStartButtonPushed" mnemonicParsing="false" text="Start Clip" />        
+
       </children>
 </VBox>

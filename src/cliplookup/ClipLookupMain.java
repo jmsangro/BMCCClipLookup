@@ -81,8 +81,8 @@ public class ClipLookupMain extends Application {
 					}
 			});			
 			mainStage.setScene(videoScene);
-			mediaView.setVisible(true);
 			mainStage.show();
+			mediaView.setVisible(true);
 			mediaPlayer.play();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

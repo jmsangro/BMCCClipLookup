@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -55,9 +56,9 @@ public class StateController implements Initializable{
 	@FXML
 	private ComboBox<String> themeComboBox;
 	@FXML
-	private MediaView mediaView;
-
-	private MediaPlayer mediaPlayer;
+	private Button clipStartButton;
+	@FXML
+	private Label playLabel;
 	
 	private Node[] stateCriteriaNodes;
 	private Node[] sirNameCriteriaNodes;
@@ -85,6 +86,8 @@ public class StateController implements Initializable{
 		ObservableList<String> themeItems =FXCollections.observableArrayList (dataSource.getAllThemes());
 		themeComboBox.setItems(themeItems);
 		personComboBox.setCellFactory((ListView<PicLabelData> l) -> new PicNameCell());
+		clipStartButton.setVisible(false);
+		playLabel.setVisible(false);
 		
 	}
 	
@@ -92,7 +95,6 @@ public class StateController implements Initializable{
 	public void stateSelected(ActionEvent e) {
         String state = stateCombo.getValue();
         System.out.println(state + " selected");
-        resetVideo();
         Collection<String> towns = dataSource.getTowns(state);
 		ObservableList<String> items =FXCollections.observableArrayList ( towns);
 		townComboBox.setItems(items);
@@ -110,7 +112,6 @@ public class StateController implements Initializable{
 
 	@FXML
 	public void byStateSelected() {
-		resetVideo();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(stateCriteriaNodes);
 		stateCombo.setValue(null);
@@ -121,7 +122,6 @@ public class StateController implements Initializable{
 
 	@FXML
 	public void byThemeSelected() {
-		resetVideo();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(themeCriteriaNodes);
 		themeComboBox.setValue(null);
@@ -139,11 +139,12 @@ public class StateController implements Initializable{
 				found = true;
 			}
 		}
+		clipStartButton.setVisible(false);
+		playLabel.setVisible(false);
 	}
 
 	@FXML
 	public void bySirNameSelected() {
-		resetVideo();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(sirNameCriteriaNodes);
 		sirNameComboBox.setValue(null);
@@ -154,7 +155,6 @@ public class StateController implements Initializable{
 	
 	@FXML
 	public void sirNameSelected() {
-		resetVideo();
 		System.out.println("sir name:"+sirNameComboBox.getValue());
 		Collection<PicLabelData> persons = dataSource.getPicLabelsWithSirName(sirNameComboBox.getValue());
 		ObservableList<PicLabelData> items =FXCollections.observableArrayList (persons);		
@@ -171,7 +171,6 @@ public class StateController implements Initializable{
 	}	
 	@FXML
 	public void townSelected() {
-		resetVideo();
 		System.out.println("town:"+townComboBox.getValue());
 		Collection<PicLabelData> persons = dataSource.getPicLabelsFromTown(townComboBox.getValue());
 		ObservableList<PicLabelData> items =FXCollections.observableArrayList (persons);		
@@ -190,22 +189,34 @@ public class StateController implements Initializable{
 	}
 	@FXML
 	public void personSelected() {
-		resetVideo();
 		PicLabelData pld = personComboBox.getValue();
 		System.out.println("person:"+pld);
 		if (pld != null) {
 			Collection<String> clips = dataSource.getClipsOfPerson(personComboBox.getValue().labelText);
+			setupClipChoices(clips);
+		}
+
+	}
+
+	private void setupClipChoices(Collection<String> clips) {
+
+		if (clips.size() == 1) {//skip having to make a choice
+			clipStartButton.setVisible(true);
+			playLabel.setVisible(true);
+			clipStartButton.setText(clips.iterator().next());
+
+		}
+		else {
 			ObservableList<String> items =FXCollections.observableArrayList (clips);		
 			clipComboBox.setItems(items);
 			clipChoiceVbox.setVisible(true);
-			if (clips.size() == 1) {//skip having to make a choice
-				clipComboBox.setValue(clips.iterator().next());			
-			}
-			else {
-				clipComboBox.setValue(null);
-			}
+			clipComboBox.setValue(null);
 		}
-
+	}
+	
+	@FXML void clipStartButtonPushed() {
+		clipComboBox.setValue(null);
+		clipComboBox.setValue(clipStartButton.getText());
 	}
 	
 	@FXML
@@ -232,27 +243,11 @@ public class StateController implements Initializable{
 	
 	@FXML
 	public void themeSelected() {
-		resetVideo();
 		String theme = themeComboBox.getValue();
 		Collection<String> clips = dataSource.getClipsOfTheme(theme);
-		ObservableList<String> items =FXCollections.observableArrayList (clips);		
-		clipComboBox.setItems(items);
-		clipChoiceVbox.setVisible(true);
-		if (clips.size() == 1) {//skip having to make a choice
-			clipComboBox.setValue(clips.iterator().next());			
-		}
-		else {
-			clipComboBox.setValue(null);
-		}
+		setupClipChoices(clips);
 	}
 	
-	private void resetVideo() {
-		if (mediaPlayer != null) {
-			mediaPlayer.stop();
-		}
-		mediaView.setVisible(false);
-
-	}
 
 	
 }

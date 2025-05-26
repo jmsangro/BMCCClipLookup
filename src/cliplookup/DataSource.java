@@ -1,6 +1,8 @@
 package cliplookup;
 
+
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,23 +10,18 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 
 public class DataSource {
 	private List<String[]> records;	
-	public DataSource () {
-		try {
-			String dataFile = "./Test Data.csv";
+	public DataSource (String dataFile) throws IOException, CsvException {
 	        FileReader filereader = new FileReader(dataFile); 
-	        try (CSVReader csvReader = new CSVReader(filereader)) {
-				records = csvReader.readAll();
-				//remove title row.
-				records.remove(records.get(0));
-			}
-
-		}
-		catch (Exception e) {
-			System.err.println(e);
-		}		
+	        CSVReader csvReader = new CSVReader(filereader);
+			records = csvReader.readAll();
+			csvReader.close();
+			//remove title row.
+			records.remove(records.get(0));
+		
 	}
 	public Collection<String> getTowns(String s) {
 		Set<String> names = new TreeSet<String>();

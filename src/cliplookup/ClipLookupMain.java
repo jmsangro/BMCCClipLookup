@@ -5,6 +5,7 @@ import java.io.File;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -15,6 +16,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 
 
 public class ClipLookupMain extends Application {
@@ -25,14 +27,25 @@ public class ClipLookupMain extends Application {
 	private static Label clipTitleLabel ;
 	private static MediaView mediaView;
 	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			mainStage = primaryStage;
-			VBox root = (VBox)FXMLLoader.load(getClass().getResource("StateScene.fxml"));
-			queryScene = new Scene(root,1200,800);
-			queryScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("ClipLookupScene.fxml"));
+			VBox root = (VBox)loader.load();
+			String dataFile = System.getProperty("dataFile");
+			DataSource dataSource = new DataSource(dataFile);
+			ClipController controller = (ClipController)loader.getController();
+			controller.setDataSource(dataSource);
+			Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+			queryScene = new Scene(root,screenBounds.getWidth(),screenBounds.getHeight());
+			
+			//queryScene = new Scene(root,1200,800);
+			queryScene.getStylesheets().add(getClass().getResource("clipLookupApp.css").toExternalForm());
 			primaryStage.setScene(queryScene);
+			primaryStage.setFullScreenExitHint("");
+			primaryStage.setFullScreen(true);
 			primaryStage.show();
 			
 
@@ -44,7 +57,7 @@ public class ClipLookupMain extends Application {
 	}
 	
 	public static void showClip(String clipTitle, String clipFile) {
-		mainStage.hide();
+		//mainStage.hide();
 		if (videoScene == null) {
 			//construct videoScene
 			vidRoot = new VBox();
@@ -53,7 +66,8 @@ public class ClipLookupMain extends Application {
 			vidRoot.getChildren().add(clipTitleLabel);
 			mediaView = new MediaView();
 			vidRoot.getChildren().add(mediaView);
-			videoScene = new Scene(vidRoot,1200,800);
+			Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+			videoScene = new Scene(vidRoot,screenBounds.getWidth(),screenBounds.getHeight());
 		}
 		System.out.println("File:"+clipFile);
 		try {
@@ -63,9 +77,11 @@ public class ClipLookupMain extends Application {
 			mediaView.setMediaPlayer(mediaPlayer);
 
 			mediaPlayer.setOnEndOfMedia(() -> {
-				mainStage.hide();
+				//mainStage.hide();
 				mainStage.setScene(queryScene);
-				mainStage.show();
+				mainStage.setFullScreenExitHint("");
+				mainStage.setFullScreen(true);
+				//mainStage.show();
 			});
 			vidRoot.setOnMouseClicked(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
@@ -75,13 +91,17 @@ public class ClipLookupMain extends Application {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						mainStage.hide();
+						//mainStage.hide();
 						mainStage.setScene(queryScene);
-						mainStage.show();
+						mainStage.setFullScreenExitHint("");
+						mainStage.setFullScreen(true);
+						//mainStage.show();
 					}
 			});			
 			mainStage.setScene(videoScene);
-			mainStage.show();
+			mainStage.setFullScreenExitHint("");
+			mainStage.setFullScreen(true);
+			//mainStage.show();
 			mediaView.setVisible(true);
 			mediaPlayer.play();
 		} catch (Exception e) {

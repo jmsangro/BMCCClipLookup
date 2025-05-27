@@ -246,15 +246,15 @@ public class ClipController implements Initializable{
 		String clipName = clipComboBox.getValue();
 		System.out.println("clip: "+clipName+" selected");
 		if (clipName != null) {
-			String fileName = dataSource.getClipLocator(clipName);
-			if (fileName != null) {
-				playClip(clipName, fileName);
+			ClipInfo clipInfo = dataSource.getClipLocator(clipName);
+			if (clipInfo != null) {
+				playClip( clipInfo);
 			} 
 		}
 	}
 
-	private void playClip(String clipName, String fileName) {
-		ClipLookupMain.showClip(clipName,fileName);
+	private void playClip(ClipInfo clipInfo) {
+		ClipLookupMain.showClip(clipInfo);
 //		System.out.println("File:"+fileName);
 //		Media media = new Media(new File(fileName).toURI().toString());
 //		mediaPlayer = new MediaPlayer(media);

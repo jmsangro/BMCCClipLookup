@@ -8,21 +8,56 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
 public class DataSource {
 	private List<String[]> records;	
+	private List<ClipInfo> clipInfoList;
 	public DataSource (String dataFile) throws IOException, CsvException {
 	        FileReader filereader = new FileReader(dataFile); 
 	        CSVReader csvReader = new CSVReader(filereader);
 			records = csvReader.readAll();
 			csvReader.close();
+			//parse(dataFile);
 			//remove title row.
 			records.remove(records.get(0));
 		
 	}
+	
+    public void parse(String dataFile){
+        try{
+            CSVReader reader=
+                    new CSVReaderBuilder(new FileReader(dataFile)).
+                            withSkipLines(1). // Skiping firstline as it is header
+                            build();
+            clipInfoList=reader.readAll().stream().map(data-> mapRowToClipInfo(data)).collect(Collectors.toList());
+            clipInfoList.forEach(System.out::println);
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+        }
+    }
+
+	private ClipInfo mapRowToClipInfo(String[] data) {
+		ClipInfo clipInfo= new ClipInfo();
+		clipInfo.setLastName(data[0]);
+		clipInfo.setFirstName(data[1]);
+		clipInfo.setDisplayName(data[2]);
+		clipInfo.setClipTitle(data[3]);
+		clipInfo.setTheme(data[4]);
+		clipInfo.setPhotoLink(data[5]);
+		clipInfo.setState(data[6]);
+		clipInfo.setCommunity(data[7]);
+		clipInfo.setClipLink(data[8]);
+		clipInfo.setMaidenName(data[9]);
+		clipInfo.setSecondFamilyName(data[10]);
+		clipInfo.setDateOfInterview(data[11]);
+		return clipInfo;
+	}
+	
 	public Collection<String> getTowns(String s) {
 		Set<String> names = new TreeSet<String>();
 		for (String[] row : records) {
@@ -64,10 +99,10 @@ public class DataSource {
 		}
 		return returnVal;
 	}
-	public String getClipLocator ( String clip) {
+	public ClipInfo getClipLocator ( String clip) {
 		for (String[] row : records) {
 			if ( row[3].equals(clip)) {
-				return row[8];
+				return mapRowToClipInfo(row);
 			}
 		}
 		return null;

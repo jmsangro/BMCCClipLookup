@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -26,7 +27,10 @@ public class ClipLookupMain extends Application {
 	private static VBox vidRoot ;
 	private static Label clipTitleLabel ;
 	private static MediaView mediaView;
-	
+	private static HBox clipInfoHBox;
+	private static Label whenLabel;
+	private static Label whereLabel;
+
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -56,7 +60,7 @@ public class ClipLookupMain extends Application {
 		}
 	}
 	
-	public static void showClip(String clipTitle, String clipFile) {
+	public static void showClip(ClipInfo clipInfo) {
 		//mainStage.hide();
 		if (videoScene == null) {
 			//construct videoScene
@@ -66,13 +70,26 @@ public class ClipLookupMain extends Application {
 			vidRoot.getChildren().add(clipTitleLabel);
 			mediaView = new MediaView();
 			vidRoot.getChildren().add(mediaView);
+			//set up clip info below media view
+			clipInfoHBox = new HBox();
+			clipInfoHBox.setAlignment(Pos.CENTER);
+			whenLabel = new Label();
+			whereLabel = new Label();
+			clipInfoHBox.getChildren().add(whenLabel);
+			clipInfoHBox.getChildren().add(whereLabel);
+			vidRoot.getChildren().add(clipInfoHBox);
+			
+			
+			
 			Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 			videoScene = new Scene(vidRoot,screenBounds.getWidth(),screenBounds.getHeight());
 		}
-		System.out.println("File:"+clipFile);
+		System.out.println("File:"+clipInfo.getClipLink());
 		try {
-			clipTitleLabel.setText(clipTitle);
-			Media media = new Media(new File(clipFile).toURI().toString());
+			clipTitleLabel.setText(clipInfo.getClipTitle());
+			whenLabel.setText("Interviewed on "+clipInfo.getDateOfInterview());
+			whereLabel.setText(" in "+clipInfo.getCommunity()+", "+clipInfo.getState());			
+			Media media = new Media(new File(clipInfo.getClipLink()).toURI().toString());
 			MediaPlayer mediaPlayer = new MediaPlayer(media);
 			mediaView.setMediaPlayer(mediaPlayer);
 

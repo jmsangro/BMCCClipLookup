@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.fxml.FXMLLoader;
@@ -90,20 +91,33 @@ public class ClipLookupMain extends Application {
 			whenLabel.setText("Interviewed on "+clipInfo.getDateOfInterview());
 			whereLabel.setText(" in "+clipInfo.getCommunity()+", "+clipInfo.getState());			
 			Media media = new Media(new File(clipInfo.getClipLink()).toURI().toString());
+			media.setOnError(() -> {
+				MediaException e = media.getError();
+				System.err.println("Media encountered error:");
+				e.printStackTrace();
+			});
 			MediaPlayer mediaPlayer = new MediaPlayer(media);
 			mediaView.setMediaPlayer(mediaPlayer);
 
 			mediaPlayer.setOnEndOfMedia(() -> {
 				//mainStage.hide();
+				mediaPlayer.dispose();
 				mainStage.setScene(queryScene);
 				mainStage.setFullScreenExitHint("");
 				mainStage.setFullScreen(true);
 				//mainStage.show();
 			});
+			mediaPlayer.setOnError(() -> {
+				MediaException e = mediaPlayer.getError();
+				System.err.println("MediaPlayer encountered error:");
+
+				e.printStackTrace();
+			});
 			vidRoot.setOnMouseClicked(new EventHandler<MouseEvent>() {
 					public void handle(MouseEvent me) {
 						try {
 							mediaView.getMediaPlayer().stop();
+							mediaView.getMediaPlayer().dispose();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -120,7 +134,7 @@ public class ClipLookupMain extends Application {
 			mainStage.setFullScreen(true);
 			//mainStage.show();
 			mediaView.setVisible(true);
-			mediaPlayer.play();
+			mediaPlayer.setAutoPlay(true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

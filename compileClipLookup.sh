@@ -1,0 +1,2 @@
+#!/bin/bash
+javac --module-path /home/administrator/javafx-sdk-21.0.7/lib:/home/administrator/BMCCClipLookup/lib --add-modules javafx.controls,javafx.fxml,javafx.media,com.opencsv -cp /home/administrator/BMCCClipLookup/lib/commons-lang3-3.17.0.jar:/home/administrator/BMCCClipLookup/lib/opencsv-5.8.jar -d ./comp --source-path /home/administrator/BMCCClipLookup/src ./src/cliplookup/ClipLookupMain.java

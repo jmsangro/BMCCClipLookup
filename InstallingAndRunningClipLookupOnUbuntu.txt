@@ -5,4 +5,4 @@ Installing and Running ClipLookup on Ubuntu
  << may need ubuntu-restricted-extras to get codecs.  sudo apt install ubuntu-restricted-extras >>
 4. Fix shell script to point to modules and dependencies.
 5. Make shell script executable by running chmod +x cliplookup.sh
-6. Run ./chiplookup.sh
+6. Run ./cliplookup.sh

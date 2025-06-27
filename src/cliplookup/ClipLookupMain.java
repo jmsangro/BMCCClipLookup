@@ -79,6 +79,8 @@ public class ClipLookupMain extends Application {
 			clipInfoHBox.getChildren().add(whenLabel);
 			clipInfoHBox.getChildren().add(whereLabel);
 			vidRoot.getChildren().add(clipInfoHBox);
+			Label returnNoteLabel= new Label("Click on video to stop and return.");
+			vidRoot.getChildren().add(returnNoteLabel);
 			
 			
 			

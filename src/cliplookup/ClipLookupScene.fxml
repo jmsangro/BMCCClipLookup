@@ -6,11 +6,24 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="1048.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cliplookup.ClipController">
       <children>
-	     <Label fx:id="titleLabel" text="Explore Community History Interview Clips">
-	      </Label>
+      	<HBox alignment="CENTER" spacing="50.0">
+    		<ImageView >
+		         <image>
+		            <Image url="@bmcc-logo.png" />
+		         </image>
+      		</ImageView>
+	     	<Label fx:id="titleLabel" text="Explore Community History Interview Clips">
+	     	</Label>
+	     	<ImageView>
+		         <image>
+		            <Image url="@bmcc-logo.png" />
+		         </image>
+      		</ImageView>
+	     </HBox> 
          <HBox alignment="CENTER" prefHeight="136.0" prefWidth="1048.0" spacing="10.0">
             <children>
                <Button fx:id="byStateButton" mnemonicParsing="false" onAction="#byStateSelected" text="by US Location" />

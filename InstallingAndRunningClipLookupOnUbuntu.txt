@@ -2,7 +2,9 @@ Installing and Running ClipLookup on Ubuntu
 1. Install Java - sudo apt install default-jre
 2. download openjfx 21 and unzip into /home/administrator/ . https://gluonhq.com/products/javafx/ version javafx-sdk-21.0.7 (don't use apt default openjfx)
 3. copy compiled code, opencsv, commons-lang dependencies, all resource files into /home/administrator/BMCCClipLookup/
+  Make sure all videos and images are correctly located. (where references in the datafile point). Make sure datafile is available.
  << may need ubuntu-restricted-extras to get codecs.  sudo apt install ubuntu-restricted-extras >>
 4. Fix shell script to point to modules and dependencies.
 5. Make shell script executable by running chmod +x cliplookup.sh
-6. Run ./cliplookup.sh
+6. modify cliplookup.sh where -DdataFile="<actual location of datafile>"
+7. Run ./cliplookup.sh

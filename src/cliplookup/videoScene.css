@@ -1,0 +1,21 @@
+/* JavaFX CSS */
+.root {
+    -fx-font-size: 24px;
+    -fx-font-family: EHUSans;
+    -fx-background-color: black;
+    -fx-text-fill: white;
+
+}
+
+
+Label {
+    -fx-font-family: EHUSans;
+    -fx-text-alignment: CENTER;
+    -fx-text-fill: white;			
+}
+
+.media-view {
+	 -fx-fit-height: 720;
+	 -fx-fit-width: 1280;
+	 -fx-preserve-ratio: true;
+} 

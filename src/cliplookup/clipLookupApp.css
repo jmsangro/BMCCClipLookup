@@ -1,13 +1,16 @@
 /* JavaFX CSS */
 .root {
-    -fx-font-size: 18px;
+    -fx-font-size: 24px;
     -fx-font-family: EHUSans;
-    -fx-background-color: white;
-    /* -fx-background-color: #71D4E9; */
+    -fx-background-image: url("background_image.jpg");
+    -fx-background-repeat: stretch;  
+    -fx-background-size: 1920 1080; 
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, blue, 30, 0.5, 0, 0); 
 }
 
 #titleLabel{
-    -fx-font-size: 32px;
+    -fx-font-size: 40px;
 }
 
 #subText{
@@ -18,4 +21,30 @@ Label {
     -fx-font-family: EHUSans;
     -fx-text-alignment: CENTER;
     -fx-text-fill: black;			
+}
+
+/* .media-view {
+#	 -fx-fit-height: 720;
+#	 -fx-preserve-ratio: true;
+#} */
+.combo-box{
+	-fx-pref-width: 300;
+}
+
+.scroll-bar{
+	 -fx-pref-width: 50;
+}
+
+.scroll-bar:vertical > .decrement-button {
+    -fx-pref-width: 50;
+    -fx-pref-height: 50;
+    -fx-position-shape: true;
+    -fx-scale-shape: true;
+}
+
+.scroll-bar:vertical > .increment-button {
+    -fx-pref-width: 50;
+    -fx-pref-height: 50;
+    -fx-position-shape: true;
+    -fx-scale-shape: true;
 }

@@ -31,3 +31,6 @@ sampleVideos/
 .project
 .settings/
 build.fxbuild
+Test Data.csv
+src/cliplookup/background_image.jpg
+src/cliplookup/bmcc-logo.png

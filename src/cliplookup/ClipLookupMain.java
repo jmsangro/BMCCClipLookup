@@ -110,9 +110,9 @@ public class ClipLookupMain extends Application {
 			DoubleProperty mvw = mediaView.fitWidthProperty();
 			DoubleProperty mvh = mediaView.fitHeightProperty();
 			//mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-//			mvh.set(720.0);
-//			mvw.set(1280.0);
-//			mediaView.setPreserveRatio(true);
+			mvh.set(720.0);
+			mvw.set(1280.0);
+			mediaView.setPreserveRatio(true);
 			mediaPlayer.setOnEndOfMedia(() -> {
 				//mainStage.hide();
 				mediaPlayer.dispose();

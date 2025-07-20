@@ -4,12 +4,9 @@ import java.io.File;
 
 
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -53,11 +50,7 @@ public class ClipLookupMain extends Application {
 			queryScene.getStylesheets().add(getClass().getResource("clipLookupApp.css").toExternalForm());
 			primaryStage.setScene(queryScene);
 			primaryStage.setFullScreenExitHint("");
-			primaryStage.initStyle(StageStyle.UNDECORATED);
-			 primaryStage.setX(screenBounds.getMinX());
-			 primaryStage.setY(screenBounds.getMinY());
-			 primaryStage.setWidth(screenBounds.getWidth());
-			 primaryStage.setHeight(screenBounds.getHeight());
+			primaryStage.setFullScreen(true);
 			primaryStage.show();
 			
 
@@ -88,10 +81,11 @@ public class ClipLookupMain extends Application {
 			vidRoot.getChildren().add(clipInfoHBox);
 			Label returnNoteLabel= new Label("Click on video to stop and return.");
 			vidRoot.getChildren().add(returnNoteLabel);
+			
+			
+			
 			Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 			videoScene = new Scene(vidRoot,screenBounds.getWidth(),screenBounds.getHeight());
-			videoScene.getStylesheets().add(clipInfo.getClass().getResource("videoScene.css").toExternalForm());
-
 		}
 		System.out.println("File:"+clipInfo.getClipLink());
 		try {
@@ -106,13 +100,7 @@ public class ClipLookupMain extends Application {
 			});
 			MediaPlayer mediaPlayer = new MediaPlayer(media);
 			mediaView.setMediaPlayer(mediaPlayer);
-			mediaView.getStyleClass().add(".media-view");
-			DoubleProperty mvw = mediaView.fitWidthProperty();
-			DoubleProperty mvh = mediaView.fitHeightProperty();
-			//mvw.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-//			mvh.set(720.0);
-//			mvw.set(1280.0);
-//			mediaView.setPreserveRatio(true);
+
 			mediaPlayer.setOnEndOfMedia(() -> {
 				//mainStage.hide();
 				mediaPlayer.dispose();

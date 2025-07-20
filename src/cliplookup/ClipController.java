@@ -237,10 +237,8 @@ public class ClipController implements Initializable{
 	}
 	
 	@FXML void clipStartButtonPushed() {
-		ClipInfo clipInfo = dataSource.getClipLocator(clipStartButton.getText());
-		if (clipInfo != null) {
-			playClip( clipInfo);
-		} 
+		clipComboBox.setValue(null);
+		clipComboBox.setValue(clipStartButton.getText());
 	}
 	
 	@FXML
@@ -248,11 +246,10 @@ public class ClipController implements Initializable{
 		String clipName = clipComboBox.getValue();
 		System.out.println("clip: "+clipName+" selected");
 		if (clipName != null) {
-			clipStartButton.setVisible(true);
-			playLabel.setVisible(true);
-			clipStartButton.setText(clipName);
-			clipStartButtonPushed();
-
+			ClipInfo clipInfo = dataSource.getClipLocator(clipName);
+			if (clipInfo != null) {
+				playClip( clipInfo);
+			} 
 		}
 	}
 

@@ -51,13 +51,15 @@ public class ClipLookupMain extends Application {
 			
 			//queryScene = new Scene(root,1200,800);
 			queryScene.getStylesheets().add(getClass().getResource("clipLookupApp.css").toExternalForm());
-			primaryStage.setScene(queryScene);
 			primaryStage.setFullScreenExitHint("");
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			 primaryStage.setX(screenBounds.getMinX());
 			 primaryStage.setY(screenBounds.getMinY());
 			 primaryStage.setWidth(screenBounds.getWidth());
 			 primaryStage.setHeight(screenBounds.getHeight());
+			primaryStage.setFullScreen(true);
+			primaryStage.setScene(queryScene);
+
 			primaryStage.show();
 			
 

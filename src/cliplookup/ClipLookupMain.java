@@ -85,8 +85,8 @@ public class ClipLookupMain extends Application {
 			clipInfoHBox.setAlignment(Pos.CENTER);
 			whenLabel = new Label();
 			whereLabel = new Label();
-			clipInfoHBox.getChildren().add(whenLabel);
 			clipInfoHBox.getChildren().add(whereLabel);
+			clipInfoHBox.getChildren().add(whenLabel);
 			vidRoot.getChildren().add(clipInfoHBox);
 			Label returnNoteLabel= new Label("Click on video to stop and return.");
 			vidRoot.getChildren().add(returnNoteLabel);
@@ -99,7 +99,7 @@ public class ClipLookupMain extends Application {
 		try {
 			clipTitleLabel.setText(clipInfo.getClipTitle());
 			whenLabel.setText("Interviewed on "+clipInfo.getDateOfInterview());
-			whereLabel.setText(" in "+clipInfo.getCommunity()+", "+clipInfo.getState());			
+			whereLabel.setText(clipInfo.getCommunity()+", "+clipInfo.getState()+"   ");			
 			Media media = new Media(new File(clipInfo.getClipLink()).toURI().toString());
 			media.setOnError(() -> {
 				MediaException e = media.getError();

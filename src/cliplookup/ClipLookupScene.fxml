@@ -27,8 +27,8 @@
          <HBox alignment="CENTER" prefHeight="136.0" prefWidth="1048.0" spacing="10.0">
             <children>
                <Button fx:id="byStateButton" mnemonicParsing="false" onAction="#byStateSelected" text="by US Location" />
-               <Button fx:id="byNameButton" mnemonicParsing="false" onAction="#bySirNameSelected" text="by Sir Name" />
-               <Button fx:id="byValueButton" mnemonicParsing="false" onAction="#byThemeSelected" text="by Subject/Theme/Value" />
+               <Button fx:id="byNameButton" mnemonicParsing="false" onAction="#bySirNameSelected" text="by Surname" />
+               <Button fx:id="byValueButton" mnemonicParsing="false" onAction="#byThemeSelected" text="by Theme" />
             </children>
          </HBox>
          <HBox fx:id="criteriaHbox" alignment="TOP_CENTER" prefWidth="1046.0" spacing="10.0">
@@ -59,7 +59,7 @@
                </VBox>
 	            <VBox fx:id="sirNameChoiceVbox" layoutX="699.0" layoutY="10.0" prefHeight="200.0">
 	               <children>
-	                  <Label text="Choose a Sir Name" />
+	                  <Label text="Choose a Surname" />
 	                  <ComboBox fx:id="sirNameComboBox" onAction="#sirNameSelected" prefWidth="150.0" />
 	               </children>
 	            </VBox>

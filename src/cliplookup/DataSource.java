@@ -1,6 +1,7 @@
 package cliplookup;
 
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class DataSource {
 			//parse(dataFile);
 			//remove title row.
 			records.remove(records.get(0));
+			validateData();
 		
 	}
 	
@@ -154,5 +156,23 @@ public class DataSource {
 			}
 		}
 		return names;
+	}
+	
+	public void validateData() {
+		for (String[] row : records) {
+			String clipLink = row[8];
+			File clipFile = new File(clipLink);
+			if ( ! clipFile.exists()) {
+				System.out.println("Bad Clip Link: "+clipLink+" for record of: "+row[2]);
+			}
+		}
+		for (String[] row : records) {
+			String photoLink = row[5];
+			File photoFile = new File(photoLink);
+			if ( ! photoFile.exists()) {
+				System.out.println("Bad Photo Link: "+photoLink+" for record of: "+row[2]);
+			}
+		}
+
 	}
 }

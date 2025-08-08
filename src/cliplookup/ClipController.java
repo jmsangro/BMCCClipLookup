@@ -3,7 +3,10 @@ package cliplookup;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -72,6 +75,9 @@ public class ClipController implements Initializable{
 	private Node[] stateCriteriaNodes;
 	private Node[] sirNameCriteriaNodes;
 	private Node[] themeCriteriaNodes;
+	private long lastActionTime;
+	private static final long ACTION_TIMEOUT = 3*60*1000;//minutes*second/minute*ms/sec (3minutes)
+
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -79,7 +85,15 @@ public class ClipController implements Initializable{
 		stateCriteriaNodes  = new Node[] { stateChoiceVbox, townChoiceVbox, personChoiceVbox, clipChoiceVbox };
 		sirNameCriteriaNodes  = new Node[] { sirNameChoiceVbox, personChoiceVbox, clipChoiceVbox };		
 		themeCriteriaNodes  = new Node[] { themeVbox, clipChoiceVbox };		
-   		for (Node node : stateCriteriaNodes) {
+   		resetControlVisibility();
+		Timer timer = new Timer();
+		timer.schedule(new IdleTimerTask(), 120000, 60000);		
+		
+		
+	}
+
+	private void resetControlVisibility() {
+		for (Node node : stateCriteriaNodes) {
 			node.setVisible(false);
 		}
 		for (Node node : sirNameCriteriaNodes) {
@@ -90,8 +104,25 @@ public class ClipController implements Initializable{
 		}
 		clipStartButton.setVisible(false);
 		playLabel.setVisible(false);
-		
-		
+	}
+	
+	private class IdleTimerTask extends TimerTask{
+		@Override
+		public void run() {
+			System.out.println("Idle Timer Task Run");
+			long now = new Date().getTime();
+			if ( now > lastActionTime + ACTION_TIMEOUT) {
+				Platform.runLater( () -> {
+					//RESET UI
+					resetControlVisibility();
+				} );
+			}
+			
+		}
+	}
+	
+	private void markActionTime() {
+		lastActionTime = new Date().getTime();
 	}
 
 	private void initData() {
@@ -108,6 +139,7 @@ public class ClipController implements Initializable{
 	
 	@FXML
 	public void stateSelected(ActionEvent e) {
+		markActionTime();
         String state = stateCombo.getValue();
         System.out.println(state + " selected");
         Collection<String> towns = dataSource.getTowns(state);
@@ -127,6 +159,7 @@ public class ClipController implements Initializable{
 
 	@FXML
 	public void byStateSelected() {
+		markActionTime();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(stateCriteriaNodes);
 		stateCombo.setValue(null);
@@ -137,6 +170,7 @@ public class ClipController implements Initializable{
 
 	@FXML
 	public void byThemeSelected() {
+		markActionTime();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(themeCriteriaNodes);
 		themeComboBox.setValue(null);
@@ -160,6 +194,7 @@ public class ClipController implements Initializable{
 
 	@FXML
 	public void bySirNameSelected() {
+		markActionTime();
 		criteriaHbox.getChildren().clear();
 		criteriaHbox.getChildren().addAll(sirNameCriteriaNodes);
 		sirNameComboBox.setValue(null);
@@ -170,6 +205,7 @@ public class ClipController implements Initializable{
 	
 	@FXML
 	public void sirNameSelected() {
+		markActionTime();
 		String value = sirNameComboBox.getValue();
 		System.out.println("sir name:"+value);
 		if (value != null) {
@@ -190,6 +226,7 @@ public class ClipController implements Initializable{
 	}	
 	@FXML
 	public void townSelected() {
+		markActionTime();
 		String value =townComboBox.getValue();
 		System.out.println("town:"+value);
 		if (value != null) {
@@ -211,6 +248,7 @@ public class ClipController implements Initializable{
 	}
 	@FXML
 	public void personSelected() {
+		markActionTime();
 		PicLabelData pld = personComboBox.getValue();
 		System.out.println("person:"+pld);
 		if (pld != null) {
@@ -245,6 +283,7 @@ public class ClipController implements Initializable{
 	
 	@FXML
 	public void clipSelected() {
+		markActionTime();
 		String clipName = clipComboBox.getValue();
 		System.out.println("clip: "+clipName+" selected");
 		if (clipName != null) {
@@ -268,6 +307,7 @@ public class ClipController implements Initializable{
 	
 	@FXML
 	public void themeSelected() {
+		markActionTime();
 		String theme = themeComboBox.getValue();
 		System.out.println("theme:"+theme);
 		if (theme != null) {

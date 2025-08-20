@@ -54,9 +54,9 @@ public class DataSource {
 		clipInfo.setState(data[6]);
 		clipInfo.setCommunity(data[7]);
 		clipInfo.setClipLink(data[8]);
-		clipInfo.setMaidenName(data[9]);
-		clipInfo.setSecondFamilyName(data[10]);
-		clipInfo.setDateOfInterview(data[11]);
+//		clipInfo.setMaidenName(data[9]);
+//		clipInfo.setSecondFamilyName(data[10]);
+		clipInfo.setDateOfInterview(data[9]);
 		return clipInfo;
 	}
 	

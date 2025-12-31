@@ -4,10 +4,11 @@ Installing and Running ClipLookup on Ubuntu
 3. copy compiled code, opencsv, commons-lang dependencies, all resource files into /home/administrator/BMCCClipLookup/
   Make sure all videos and images are correctly located. (where references in the datafile point). Make sure datafile is available.
  << may need ubuntu-restricted-extras to get codecs.  sudo apt install ubuntu-restricted-extras OR during Ubuntu installation choose "Download and install support for additional Media formats">>
-4. Fix shell script to point to modules and dependencies.
+4. Fix shell script to point to actual file locations of modules and dependencies.
 5. Make shell script executable by running chmod +x cliplookup.sh
-6. modify cliplookup.sh where -DdataFile="<actual location of datafile>"
-7. Run ./cliplookup.sh
+6. Make sure all the videos and interviewee images are on the file system. (Recommend storing these in /home/administrator/videos and /images.) Make sure references in the dataFile csv file point to these locations.
+7. modify cliplookup.sh where -DdataFile="<actual location of datafile>" (Default location is /home/administrator/BMCCClipLookup/CliplookupDB.csv)
+8. Run ./cliplookup.sh
 
 To setup so that Clip Lookup runs automatically at power on
 
@@ -19,3 +20,5 @@ Setup cliplookup.sh to run on startup
 Click on "Show Apps" control in lower left corner. In top search bar, search for and select "Startup Applications".
 Click on the Add button
 In the "Add Startup Program" dialog, add a name. Browse to the script to launch and select it. Add a comment if desired. Click Add.
+
+Set Display to not go to sleep. Settings->Power->turn display off after->Never
